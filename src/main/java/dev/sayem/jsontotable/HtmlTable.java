@@ -29,14 +29,20 @@ public class HtmlTable {
 
     private static String convertToHtmlTable(JSONArray jsonArray) {
         if (jsonArray.isEmpty()) return "";
+        Object item = jsonArray.get(0);
+        if (!(item instanceof JSONObject) && !(item instanceof JSONArray))
+            return item.toString();
+        if (item instanceof JSONArray)
+            return convertToHtmlTable((JSONArray) item);
+
         Set<String> keys = jsonArray.getJSONObject(0).keySet();
         StringBuilder html = new StringBuilder();
         html.append("<table style=\"border: 1px solid #ddd; padding: 8px;\">");
 
         // HEAD
-        html.append("<tr>");
+        html.append("<tr style=\"background-color: #4CAF50; color: white;padding-top: 5px; padding-bottom: 5px;\">");
         keys.forEach(key -> {
-            html.append("<th>").append(key).append("</th>");
+            html.append("<th style=\"text-align: left;\">").append(key).append("</th>");
         });
         html.append("</tr>");
 
