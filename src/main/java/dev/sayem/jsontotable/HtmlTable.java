@@ -3,9 +3,6 @@ package dev.sayem.jsontotable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class HtmlTable {
@@ -16,9 +13,7 @@ public class HtmlTable {
         if (json == null || json.isEmpty()) throw new RuntimeException("Json can't be null or empty!");
         if (json.trim().startsWith("{")) {
             JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonArray =new JSONArray();
-            jsonArray.put(jsonObject);
-            return convertToHtmlTable(jsonArray);
+            return convertToHtmlTable(fromObject(jsonObject));
         } else if (json.trim().startsWith("[")) {
             JSONArray jsonArray = new JSONArray(json);
             return convertToHtmlTable(jsonArray);
@@ -26,11 +21,17 @@ public class HtmlTable {
         throw new RuntimeException("Provided value doesn't seem to be a json formatted string!");
     }
 
+    private static JSONArray fromObject(JSONObject object) {
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(object);
+        return jsonArray;
+    }
+
     private static String convertToHtmlTable(JSONArray jsonArray) {
         if (jsonArray.isEmpty()) return "";
         Set<String> keys = jsonArray.getJSONObject(0).keySet();
         StringBuilder html = new StringBuilder();
-        html.append("<table class=\"table table-striped\">");
+        html.append("<table style=\"border: 1px solid #ddd; padding: 8px;\">");
 
         // HEAD
         html.append("<tr>");
@@ -45,7 +46,15 @@ public class HtmlTable {
             JSONObject obj = jsonArray.getJSONObject(i);
             html.append("<tr>");
             keys.forEach(key -> {
-                html.append("<td>").append(obj.get(key)).append("</td>");
+                Object value = obj.get(key);
+                String toAppend;
+                if (value instanceof JSONArray) {
+                    toAppend = convertToHtmlTable((JSONArray) value);
+                } else if (value instanceof JSONObject) {
+                    toAppend = convertToHtmlTable(fromObject((JSONObject) value));
+                } else
+                    toAppend = value.toString();
+                html.append("<td>").append(toAppend).append("</td>");
             });
             html.append("</tr>");
         }
