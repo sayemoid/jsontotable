@@ -1,6 +1,45 @@
 # jsontotable
 This library converts json object or array to html table
 
+[![](https://jitpack.io/v/sayemkcn/jsontotable.svg)](https://jitpack.io/#sayemkcn/jsontotable)
+
+#### Maven
+* Add Jitpack repository if not added already
+```aidl
+    <repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+	
+```
+* Add Dependency
+```aidl
+    <dependency>
+	    <groupId>com.github.sayemkcn</groupId>
+	    <artifactId>jsontotable</artifactId>
+	    <version>v0.1</version>
+	</dependency>
+```
+
+#### Gradle
+* Add Jitpack repository if not added already
+```aidl
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+* Add Dependency
+```aidl
+	dependencies {
+	        implementation 'com.github.sayemkcn:jsontotable:v0.1'
+	}
+```
+
 ## Example
 
 ### Input
