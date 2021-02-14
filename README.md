@@ -16,10 +16,10 @@ This library converts json object or array to html table
 ```
 * Add Dependency
 ```aidl
-    <dependency>
+        <dependency>
 	    <groupId>com.github.sayemkcn</groupId>
 	    <artifactId>jsontotable</artifactId>
-	    <version>v0.1</version>
+	    <version>v0.4</version>
 	</dependency>
 ```
 
@@ -36,7 +36,7 @@ This library converts json object or array to html table
 * Add Dependency
 ```aidl
 	dependencies {
-	        implementation 'com.github.sayemkcn:jsontotable:v0.1'
+	        implementation 'com.github.sayemkcn:jsontotable:v0.4'
 	}
 ```
 
