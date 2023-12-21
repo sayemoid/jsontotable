@@ -5,7 +5,7 @@ This library converts json object or array to html table
 
 #### Maven
 * Add Jitpack repository if not added already
-```aidl
+```xml
     <repositories>
 		<repository>
 		    <id>jitpack.io</id>
@@ -15,7 +15,7 @@ This library converts json object or array to html table
 	
 ```
 * Add Dependency
-```aidl
+```xml
         <dependency>
 	    <groupId>com.github.sayemkcn</groupId>
 	    <artifactId>jsontotable</artifactId>
@@ -25,7 +25,7 @@ This library converts json object or array to html table
 
 #### Gradle
 * Add Jitpack repository if not added already
-```aidl
+```groovy
 	allprojects {
 		repositories {
 			...
@@ -34,7 +34,7 @@ This library converts json object or array to html table
 	}
 ```
 * Add Dependency
-```aidl
+```groovy
 	dependencies {
 	        implementation 'com.github.sayemkcn:jsontotable:v0.4'
 	}
@@ -43,7 +43,7 @@ This library converts json object or array to html table
 ## Example
 
 ### Input
-```aidl
+```json
 [
   {
     "UserID": 1,
@@ -77,10 +77,10 @@ This library converts json object or array to html table
 ```
 
 ### Convert
-String html = HtmlTable.fromJson(json);
+`String html = HtmlTable.fromJson(json);`
 
 ### Output
-```aidl
+```html
 <table class="table table-striped">
 	<tr>
 		<th>UserName</th>
