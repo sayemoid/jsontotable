@@ -7,36 +7,36 @@ This library converts json object or array to html table
 * Add Jitpack repository if not added already
 ```xml
     <repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-	</repositories>
-	
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
 ```
 * Add Dependency
 ```xml
-        <dependency>
-	    <groupId>com.github.sayemkcn</groupId>
-	    <artifactId>jsontotable</artifactId>
-	    <version>v0.4</version>
-	</dependency>
+    <dependency>
+        <groupId>com.github.sayemkcn</groupId>
+        <artifactId>jsontotable</artifactId>
+        <version>v0.5</version>
+    </dependency>
 ```
 
 #### Gradle
 * Add Jitpack repository if not added already
 ```groovy
 	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+ 	    repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	   }
 	}
 ```
 * Add Dependency
 ```groovy
 	dependencies {
-	        implementation 'com.github.sayemkcn:jsontotable:v0.4'
+	        implementation 'com.github.sayemkcn:jsontotable:v0.5'
 	}
 ```
 
@@ -44,88 +44,77 @@ This library converts json object or array to html table
 
 ### Input
 ```json
-[
-  {
-    "UserID": 1,
-    "UserName": "rooter",
-    "Password": "12345",
-    "Country": "UK",
-    "Email": "sac@gmail.com"
-  },
-  {
-    "UserID": 2,
-    "UserName": "binu",
-    "Password": "123",
-    "Country": "uk",
-    "Email": "Binu@gmail.com"
-  },
-  {
-    "UserID": 3,
-    "UserName": "cal",
-    "Password": "123",
-    "Country": "uk",
-    "Email": "cal@gmail.com"
-  },
-  {
-    "UserID": 4,
-    "UserName": "nera",
-    "Password": "1234",
-    "Country": "uk",
-    "Email": "nera@gmail.com"
-  }
-]
+   [
+	{
+        "name": "Apple",
+        "color": "Red",
+        "quantity": 10,
+        "isFresh": true
+	},
+	{
+        "name": "Banana",
+        "color": "Yellow",
+        "quantity": 15,
+        "isFresh": true
+	},
+	{
+        "name": "Orange",
+        "color": "Orange",
+        "quantity": 8,
+        "isFresh": false
+	},
+	{
+        "name": "Grapes",
+        "color": "Purple",
+        "quantity": 20,
+        "isFresh": true
+	}
+    ]
 ```
 
 ### Convert
-`List<String> cssClasses = new ArrayList<>();`
-
-`cssClasses.add("table");`
-
-`cssClasses.add("table-striped");`
-
-`String html = HtmlTable.fromJson(json);
-`
+```java
+var htmlTable = HtmlTable.fromJson(json, List.of("boobies"));
+String html = HtmlTable.fromJson(json);
+```
 
 ### Output
 ```html
-<table class="table table-striped">
-	<tr>
-		<th>UserName</th>
-		<th>Email</th>
-		<th>UserID</th>
-		<th>Country</th>
-		<th>Password</th>
-	</tr>
-	<tbody>
-		<tr>
-			<td>rooter</td>
-			<td>sac@gmail.com</td>
-			<td>1</td>
-			<td>UK</td>
-			<td>12345</td>
-		</tr>
-		<tr>
-			<td>binu</td>
-			<td>Binu@gmail.com</td>
-			<td>2</td>
-			<td>uk</td>
-			<td>123</td>
-		</tr>
-		<tr>
-			<td>cal</td>
-			<td>cal@gmail.com</td>
-			<td>3</td>
-			<td>uk</td>
-			<td>123</td>
-		</tr>
-		<tr>
-			<td>nera</td>
-			<td>nera@gmail.com</td>
-			<td>4</td>
-			<td>uk</td>
-			<td>1234</td>
-		</tr>
-	</tbody>
+<table class="boobies">
+    <thead>
+    <tr>
+        <th>quantity</th>
+        <th>color</th>
+        <th>name</th>
+        <th>isFresh</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>10</td>
+        <td>Red</td>
+        <td>Apple</td>
+        <td>true</td>
+    </tr>
+    <tr>
+        <td>15</td>
+        <td>Yellow</td>
+        <td>Banana</td>
+        <td>true</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>Orange</td>
+        <td>Orange</td>
+        <td>false</td>
+    </tr>
+    <tr>
+        <td>20</td>
+        <td>Purple</td>
+        <td>Grapes</td>
+        <td>true</td>
+    </tr>
+    </tbody>
 </table>
 
 ```
