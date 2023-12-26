@@ -1,8 +1,20 @@
 package dev.sayem.jsontotable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        String json = "[\n" +
+
+        List<String> cssClasses = new ArrayList<>();
+
+        cssClasses.add("c1");
+        cssClasses.add("c2");
+        System.out.println(HtmlTable.fromJson(getJsonString(), cssClasses));
+    }
+
+    private static String getJsonString() {
+        return "[\n" +
                 "  {\n" +
                 "    \"UserID\": 1,\n" +
                 "    \"UserName\": \"rooter\",\n" +
@@ -32,6 +44,5 @@ public class Main {
                 "    \"Email\": \"nera@gmail.com\"\n" +
                 "  }\n" +
                 "]";
-        System.out.println(HtmlTable.fromJson(json));
     }
 }

@@ -77,7 +77,14 @@ This library converts json object or array to html table
 ```
 
 ### Convert
-`String html = HtmlTable.fromJson(json);`
+`List<String> cssClasses = new ArrayList<>();`
+
+`cssClasses.add("table");`
+
+`cssClasses.add("table-striped");`
+
+`String html = HtmlTable.fromJson(json);
+`
 
 ### Output
 ```html
