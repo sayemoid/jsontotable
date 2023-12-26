@@ -13,7 +13,7 @@ public class HtmlTable {
         if (json == null || json.isEmpty()) throw new RuntimeException("Json can't be null or empty!");
         if (json.trim().startsWith("{")) {
             JSONObject jsonObject = new JSONObject(json);
-            return convertToHtmlTable(fromObject(jsonObject));
+            return convertToHtmlTable(jsonObject);
         } else if (json.trim().startsWith("[")) {
             JSONArray jsonArray = new JSONArray(json);
             return convertToHtmlTable(jsonArray);
@@ -68,5 +68,58 @@ public class HtmlTable {
 
         html.append("</table>");
         return html.toString();
+    }
+
+    private static String convertToHtmlTable(JSONObject jsonObject) {
+
+        // Extract CSS styles for the table
+        String tableStyle = jsonObject.optString("tableStyle", "");
+        String tHeadStyle = jsonObject.optString("tHeadStyle", "");
+        String tBodyStyle = jsonObject.optString("tBodyStyle", "");
+        String thStyle = jsonObject.optString("thStyle", "");
+        String trStyle = jsonObject.optString("trStyle", "");
+        String tdStyle = jsonObject.optString("tdStyle", "");
+
+        // Extract data for the table
+        JSONArray rows = jsonObject.getJSONArray("rows");
+
+        Set<String> keys = rows.getJSONObject(0).keySet();
+        StringBuilder html = new StringBuilder();
+        html.append("<table").append(validateCssStyle(tableStyle));
+
+        // Prepare HEAD
+        html.append("<thead").append(validateCssStyle(tHeadStyle)).append("<tr").append(validateCssStyle(trStyle));
+        keys.forEach(key -> {
+            html.append("<th").append(validateCssStyle(thStyle)).append(key).append("</th>");
+        });
+        html.append("</tr>").append("</thead>");
+
+        // Prepare BODY
+        html.append("<tbody").append(validateCssStyle(tBodyStyle));
+        for (int i = 0; i < rows.length(); i++) {
+            JSONObject obj = rows.getJSONObject(i);
+            html.append("<tr").append(validateCssStyle(trStyle));
+            keys.forEach(key -> {
+                Object value = obj.get(key);
+                String toAppend;
+                if (value instanceof JSONArray) {
+                    toAppend = convertToHtmlTable((JSONArray) value);
+                } else if (value instanceof JSONObject) {
+                    toAppend = convertToHtmlTable(fromObject((JSONObject) value));
+                } else
+                    toAppend = value.toString();
+                html.append("<td").append(validateCssStyle(tdStyle)).append(toAppend).append("</td>");
+            });
+            html.append("</tr>");
+        }
+        html.append("</tbody>");
+
+        html.append("</table>");
+        return html.toString();
+    }
+
+    private static String validateCssStyle(String cssValue) {
+        if (cssValue.length() > 1) return " style=\"" + cssValue + "\">";
+        return ">";
     }
 }
