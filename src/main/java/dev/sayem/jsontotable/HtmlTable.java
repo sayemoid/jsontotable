@@ -3,9 +3,10 @@ package dev.sayem.jsontotable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class HtmlTable {
     private HtmlTable() {
@@ -71,4 +72,37 @@ public class HtmlTable {
         html.append("</table>");
         return html.toString();
     }
+
+    public static String convertToHtmlTable(LinkedHashMap<String, ?> dataMap, String cssClasses) {
+        if (dataMap.isEmpty()) return "";
+
+        StringBuilder html = new StringBuilder();
+        html.append("<table class=\"").append(cssClasses).append("\">");
+
+        // Flat table (Map<String, String>)
+        html.append("<thead>").append("<tr>");
+        for (String key : dataMap.keySet()) {
+            html.append("<th>").append(key).append("</th>");
+        }
+        html.append("</tr>").append("</thead>");
+
+        html.append("<tbody>").append("<tr>");
+        dataMap.values().forEach((value) -> {
+            String toAppend;
+            if (value instanceof LinkedHashMap) {
+                toAppend = convertToHtmlTable((LinkedHashMap<String, String>) value, cssClasses);
+            } else {
+                toAppend = value != null ? value.toString() : "";
+            }
+            html.append("<td>").append(toAppend).append("</td>");
+
+        });
+        html.append("</tr>").append("</tbody>");
+
+
+        html.append("</table>");
+        return html.toString();
+    }
+
+
 }
