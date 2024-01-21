@@ -40,7 +40,7 @@ public class HtmlTable {
 
         Set<String> keys = jsonArray.getJSONObject(0).keySet();
         StringBuilder html = new StringBuilder();
-        html.append("<table class=\"").append(String.join(" ", cssClasses)).append("\">");
+        html.append("<table class=\"").append(java.lang.String.join(" ", cssClasses)).append("\">");
 
         // HEAD
         html.append("<thead>").append("<tr>");
@@ -73,36 +73,33 @@ public class HtmlTable {
         return html.toString();
     }
 
-    public static String convertToHtmlTable(LinkedHashMap<String, ?> dataMap, String cssClasses) {
-        if (dataMap.isEmpty()) return "";
-
+    public static String toHtml(List<String> headers, List<List<String>> data, String cssClasses) {
         StringBuilder html = new StringBuilder();
-        html.append("<table class=\"").append(cssClasses).append("\">");
 
-        // Flat table (Map<String, String>)
-        html.append("<thead>").append("<tr>");
-        for (String key : dataMap.keySet()) {
-            html.append("<th>").append(key).append("</th>");
+        html.append("<table class=\"").append(String.join(" ", cssClasses)).append("\">");
+        // table headers
+        html.append("<thead><tr>");
+        for (String header : headers) {
+            html.append("<th>").append(header).append("</th>");
         }
-        html.append("</tr>").append("</thead>");
+        html.append("</tr></thead>");
 
-        html.append("<tbody>").append("<tr>");
-        dataMap.values().forEach((value) -> {
-            String toAppend;
-            if (value instanceof LinkedHashMap) {
-                toAppend = convertToHtmlTable((LinkedHashMap<String, String>) value, cssClasses);
-            } else {
-                toAppend = value != null ? value.toString() : "";
+        // table body
+        html.append("<tbody>");
+        for (List<String> row : data) {
+            html.append("<tr>");
+            for (String cell : row) {
+                html.append("<td>").append(cell).append("</td>");
             }
-            html.append("<td>").append(toAppend).append("</td>");
-
-        });
-        html.append("</tr>").append("</tbody>");
-
+            html.append("</tr>");
+        }
+        html.append("</tbody>");
 
         html.append("</table>");
+
         return html.toString();
     }
+
 
 
 }

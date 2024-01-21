@@ -48,24 +48,19 @@ public class JsonToHtmlTableTest {
                 """.trim(), htmlTable.trim());
     }
 
-
     @Test
-    void mapToHtmlTableTest() {
+    void listToHtmlTableTest() {
 
-        LinkedHashMap<String, Object> data = new LinkedHashMap<>();
-        data.put("Name", "Fruits");
-        data.put("Type", "Citrus");
+        List<String> headers = List.of("Name", "Age", "City");
+        List<List<String>> data = List.of(
+                List.of("John", "25", "New York"),
+                List.of("Alice", "30", "San Francisco")
+        );
 
-        LinkedHashMap<String,String> fruits = new LinkedHashMap<>();
-        fruits.put("Name", "Apple");
-        fruits.put("Color", "Red");
-        fruits.put("Taste", "Sweet");
+        String htmlTable = HtmlTable.toHtml(headers, data,"boobies boobies-red");
 
-        data.put("Items", fruits);
-
-        var htmlTable = HtmlTable.convertToHtmlTable(data, "boobies boobies-red");
         Assertions.assertEquals("""
-                <table class="boobies boobies-red"><thead><tr><th>Name</th><th>Type</th><th>Items</th></tr></thead><tbody><tr><td>Fruits</td><td>Citrus</td><td><table class="boobies boobies-red"><thead><tr><th>Name</th><th>Color</th><th>Taste</th></tr></thead><tbody><tr><td>Apple</td><td>Red</td><td>Sweet</td></tr></tbody></table></td></tr></tbody></table>
+                <table class="boobies boobies-red"><thead><tr><th>Name</th><th>Age</th><th>City</th></tr></thead><tbody><tr><td>John</td><td>25</td><td>New York</td></tr><tr><td>Alice</td><td>30</td><td>San Francisco</td></tr></tbody></table>
                 """.trim(), htmlTable.trim());
     }
 
