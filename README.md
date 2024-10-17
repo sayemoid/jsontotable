@@ -36,7 +36,7 @@ This library converts json object or array to html table
 * Add Dependency
 ```groovy
 	dependencies {
-	        implementation 'com.github.sayemkcn:jsontotable:v0.5'
+	        implementation 'com.github.sayemoid:jsontotable:v0.8'
 	}
 ```
 
